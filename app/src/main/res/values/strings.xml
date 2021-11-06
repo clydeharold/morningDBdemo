@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Morning DB Demo</string>
+    <string name="drop_table">DROP TABLE IF EXIST</string>
 </resources>
