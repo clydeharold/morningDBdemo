@@ -1,5 +1,6 @@
 package com.example.morningdbdemo.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.morningdbdemo.R;
+import com.example.morningdbdemo.model.Product;
 import com.example.morningdbdemo.util.Util;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -37,7 +39,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Create
 
+    public  void addProduct (Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(Util.KEY_NAME,product.getName());
+        values.put(Util.KEY_PRICE, product.getPrice());
+        values.put(Util.KEY_QUANTITY, product.getQuantity());
+
+        db.insert(Util.TABLE_NAME, null, values);
+        db.close();
+    }
+
     //Retrieve
+
+
 
     //Update
     
