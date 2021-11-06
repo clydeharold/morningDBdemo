@@ -13,6 +13,9 @@ import com.example.morningdbdemo.R;
 import com.example.morningdbdemo.model.Product;
 import com.example.morningdbdemo.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context) {
@@ -75,6 +78,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         product.setQuantity(cursor.getInt(3));
 
         return product;
+    }
+
+    public List<Product> getAllProducts() {
+        List<Product> productList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //Select All Contacts
+        String selectAll = "SELECT * FROM " + Util.TABLE_NAME;
+
+
+        Cursor cursor = db.rawQuery(selectAll, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Product product = new Product();
+                product.setId(cursor.getInt(0));
+                product.setName(cursor.getString(1));
+                product.setPrice(cursor.getLong(2));
+                product.setQuantity(cursor.getInt(3));
+
+                //add product object to list
+                productList.add(product);
+            }while(cursor.moveToNext());
+        }
+
+        return productList;
+
     }
 
     
