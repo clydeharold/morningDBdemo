@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -44,7 +45,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Create
 
-    public  void addProduct (Product product) {
+    public Boolean addProduct (Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -55,7 +56,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(Util.TABLE_NAME, null, values);
         Log.d("db","Add Product: " + "Successful");
+
         db.close();
+        return true;
     }
 
     //Retrieve
