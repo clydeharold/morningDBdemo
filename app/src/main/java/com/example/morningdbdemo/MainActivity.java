@@ -40,21 +40,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //search
-            Product product = db.getProduct(1);
+       Product product = db.getProduct(3);
+
+        if(product != null) {
+            db.deleteProduct(product);
+            Toast.makeText(getApplicationContext(),"Product" + product.getName() + " Successfully Deleted.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"Id does not exist.", Toast.LENGTH_SHORT).show();
+        }
 
 
-
-
-        //Product product = new Product();
-
-        product.setId(2);
-        product.setName("Head Phone");
-        product.setQuantity(2);
-        product.setPrice(1500);
-
-        int flag = db.updateProduct(product);
-        Log.d("Flag", "Flag: " + flag);
     }
 
     View.OnClickListener startViewActivity = new View.OnClickListener() {

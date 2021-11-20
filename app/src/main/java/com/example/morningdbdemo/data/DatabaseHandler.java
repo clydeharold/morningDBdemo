@@ -70,17 +70,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Util.KEY_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
 
+
         if(cursor != null) {
             cursor.moveToFirst();
         }
 
-        Product product = new Product();
-        product.setId(cursor.getInt(0));
-        product.setName(cursor.getString(1));
-        product.setPrice(cursor.getLong(2));
-        product.setQuantity(cursor.getInt(3));
+        if(cursor.getCount() != 0) {
+            Product product = new Product();
+            product.setId(cursor.getInt(0));
+            product.setName(cursor.getString(1));
+            product.setPrice(cursor.getLong(2));
+            product.setQuantity(cursor.getInt(3));
+            return product;
+        }
+        else
+            return null;
 
-        return product;
     }
 
     public List<Product> getAllProducts() {
@@ -129,4 +134,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //Delete
+
+    public void deleteProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(Util.TABLE_NAME, Util.KEY_ID + "=?",
+                new String[]{String.valueOf(product.getId())});
+        db.close();
+    }
+
+    //Get product count
+    public int getCount() {
+        String countQuery = "SELECT * FROM " + Util.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        return cursor.getCount();
+
+    }
 }
